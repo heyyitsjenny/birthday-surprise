@@ -17,7 +17,9 @@ body {
 
 h1 {
     font-family: 'Pacifico', cursive;
-    color: #ff99cc;
+    background: linear-gradient(45deg, #ff99cc, #ff4da6, #ff66ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .page { display: none; padding: 40px; }
@@ -30,6 +32,7 @@ button {
     color: white;
     border-radius: 25px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 /* Curtains */
@@ -89,7 +92,7 @@ button {
 
 <div id="page2" class="page">
     <h1 id="typingText"></h1>
-    <h2>🎂 18 🕯️</h2>
+    <h2 id="cake">🎂 18 🕯️</h2>
     <button onclick="blowCandle()">Blow candle 💨</button>
 </div>
 
@@ -98,15 +101,27 @@ button {
     <p>
         Thank you for being in my life 💕<br><br>
         I love you endlessly ♾️💖<br><br>
-        Stay happy forever, my Allwinaaaaa ✨
+        Stay happy forever ✨
     </p>
+
+    <!-- Optional Image -->
+    <img src="https://i.imgur.com/8Km9tLL.jpg" 
+         style="width:200px; border-radius:20px; margin-top:20px;">
+
+    <br><br>
+    <button onclick="finalMessage()">One last thing 💌</button>
 </div>
 
 <script>
 
 function openCurtain() {
-    document.getElementById("bgMusic").play();
+    let music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+    music.play();
+
     document.body.classList.add("open");
+    createHearts();
+
     setTimeout(() => {
         showPage("page2");
         startTyping();
@@ -128,6 +143,7 @@ function startTyping() {
 }
 
 function blowCandle() {
+    document.getElementById("cake").innerHTML = "💨";
     createConfetti();
     setTimeout(() => showPage("page3"), 2000);
 }
@@ -142,9 +158,27 @@ function createConfetti() {
         let c = document.createElement("div");
         c.classList.add("confetti");
         c.style.left = Math.random() * 100 + "vw";
+        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
         document.body.appendChild(c);
         setTimeout(() => c.remove(), 3000);
     }
+}
+
+function createHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+}
+
+function finalMessage() {
+    alert("I love you more than words can say 💖");
 }
 
 </script>
