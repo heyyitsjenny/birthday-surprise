@@ -32,7 +32,6 @@ button {
     color: white;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 16px;
 }
 
 /* Curtains */
@@ -42,7 +41,7 @@ button {
     height: 100%;
     background: #ff4da6;
     top: 0;
-    z-index: 10;
+    z-index: 2;
     transition: 2s;
 }
 .left { left: 0; }
@@ -85,12 +84,7 @@ button {
 <div class="curtain left"></div>
 <div class="curtain right"></div>
 
-<div id="page1" class="page active">
-    <h1>Tap to open your surprise 💌</h1>
-    <button onclick="openCurtain()">Open</button>
-</div>
-
-<div id="page2" class="page">
+<div id="page2" class="page active">
     <h1 id="typingText"></h1>
     <h2 id="cake">🎂 18 🕯️</h2>
     <button onclick="blowCandle()">Blow candle 💨</button>
@@ -104,7 +98,6 @@ button {
         Stay happy forever ✨
     </p>
 
-    <!-- Optional Image -->
     <img src="https://i.imgur.com/8Km9tLL.jpg" 
          style="width:200px; border-radius:20px; margin-top:20px;">
 
@@ -114,16 +107,19 @@ button {
 
 <script>
 
-function openCurtain() {
+window.onload = () => {
+    startExperience();
+};
+
+function startExperience() {
     let music = document.getElementById("bgMusic");
     music.volume = 0.5;
-    music.play();
+    music.play().catch(() => {});
 
     document.body.classList.add("open");
     createHearts();
 
     setTimeout(() => {
-        showPage("page2");
         startTyping();
     }, 2000);
 }
