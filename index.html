@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle at top, #2b0033, #0d001a);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    overflow: hidden;
+    color: #fff;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    color: #ff99cc;
+    text-shadow: 0 0 15px #ff4da6;
+}
+
+.page {
+    display: none;
+    padding: 40px;
+}
+
+.active {
+    display: block;
+}
+
+button {
+    padding: 15px 25px;
+    border: none;
+    background: linear-gradient(45deg, #ff4da6, #ff99cc);
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff4da6;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.curtain {
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    background: #ff4da6;
+    top: 0;
+    z-index: 10;
+    transition: 2s;
+}
+
+.left { left: 0; }
+.right { right: 0; }
+
+.open .left { transform: translateX(-100%); }
+.open .right { transform: translateX(100%); }
+
+.star {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+.heart {
+    position: fixed;
+    color: #ff66b2;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.cake {
+    font-size: 90px;
+    text-shadow: 0 0 20px #ff99cc;
+}
+
+.typing {
+    border-right: 3px solid #ff99cc;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b8d4c.mp3?filename=romantic-piano-110997.mp3" type="audio/mpeg">
+</audio>
+
+<div class="curtain left"></div>
+<div class="curtain right"></div>
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+    <h1>Tap to open your surprise 💌</h1>
+    <button onclick="openCurtain()">Open</button>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page">
+    <h1 class="typing" id="typingText"></h1>
+
+    <div class="cake">🎂✨🕯️18</div>
+
+    <button onclick="blowCandle()">Blow the candle 💨</button>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="page">
+    <h1>💖 Happy 18 Allwinaaaaa 💖</h1>
+
+    <p>
+        Thank you for being in my life 💕<br><br>
+        I love you endlessly ♾️💖<br><br>
+        Stay happy forever, my Allwinaaaaa ✨
+    </p>
+
+    <button onclick="moreConfetti()">Tap again 🎉</button>
+</div>
+
+<script>
+
+/* Curtain + START MUSIC */
+function openCurtain() {
+    document.getElementById("bgMusic").play(); // 🎵 music starts here
+    document.body.classList.add("open");
+    setTimeout(() => {
+        showPage("page2");
+        startTyping();
+        startHearts();
+        startStars();
+    }, 2000);
+}
+
+/* Typing */
+let text = "Happy 18th Birthday, my <span style='color:#ff66cc; text-shadow:0 0 20px #ff66cc;'>Allwinaaaaa</span> 💖";
+let i = 0;
+
+function startTyping() {
+    function type() {
+        if (i <= text.length) {
+            document.getElementById("typingText").innerHTML = text.substring(0, i);
+            i++;
+            setTimeout(type, 60);
+        }
+    }
+    type();
+}
+
+/* Candle */
+function blowCandle() {
+    createConfetti();
+    setTimeout(() => {
+        showPage("page3");
+        createConfetti();
+    }, 2000);
+}
+
+/* Pages */
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+/* Confetti */
+function createConfetti() {
+    for (let i = 0; i < 70; i++) {
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = ["#ff4da6","#ff99cc","#ffffff"][Math.floor(Math.random()*3)];
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }
+}
+
+function moreConfetti() {
+    createConfetti();
+}
+
+/* Hearts */
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (15 + Math.random() * 25) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+}
+
+/* Stars */
+function startStars() {
+    for (let i = 0; i < 50; i++) {
+        let star = document.createElement("div");
+        star.classList.add("star");
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(star);
+    }
+}
+
+</script>
+
+</body>
+</html>
